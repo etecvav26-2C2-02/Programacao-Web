@@ -39,3 +39,29 @@ O aria-expanded informa o estado de um componente que pode ser expandido ou reco
 c) Qual é a importância do aria-label para usuários de leitores de tela?
 
 O aria-label fornece um nome/rótulo textual para o elemento, que é lido pelo leitor de tela mesmo que não apareça visualmente na tela dessa forma. No exemplo, o botão mostra apenas a palavra "Menu", mas o aria-label="Abrir menu" garante que o leitor de tela anuncie de forma clara qual é a ação daquele botão. Isso é especialmente importante em botões que usam apenas ícones ou textos curtos e ambíguos, pois sem esse atributo o usuário cego poderia não entender a real função do elemento.
+
+---
+
+Questão 3 – Reflexão (Difícil)
+
+Por que o WAI-ARIA não substitui o HTML semântico?
+
+O HTML semântico (button, nav, main, header, footer, entre outros) já possui, por padrão, significado próprio, suporte nativo à navegação por teclado e comportamento esperado pelos navegadores e tecnologias assistivas. Por exemplo, um button já é automaticamente focável com Tab, pode ser ativado com Enter ou Espaço, e já é reconhecido por leitores de tela como um botão, sem que seja necessário nenhum atributo adicional.
+
+Quando se usa role="button" em uma div no lugar de um button real, o desenvolvedor precisa recriar manualmente todo esse comportamento: adicionar tabindex para tornar o elemento focável, programar em JavaScript a resposta às teclas Enter e Espaço, e garantir que o estilo visual comunique claramente que aquilo é interativo. Ou seja, o WAI-ARIA descreve para a tecnologia assistiva que o elemento deveria se comportar como um botão, mas não implementa esse comportamento sozinho — quem faz isso é o HTML semântico nativo ou o desenvolvedor via código adicional. Por isso, a boa prática é sempre priorizar o elemento semântico correto e usar ARIA apenas como complemento, quando a semântica do HTML não for suficiente.
+
+Situação em que o uso do ARIA é necessário
+
+Um exemplo comum é um menu de navegação responsivo (como o navbar-toggler do Bootstrap), no qual um button abre e fecha um menu em telas menores. O HTML semântico do button já garante que ele seja acessível como botão, mas ele sozinho não informa:
+
+- qual elemento da página é controlado por aquele botão (aria-controls);
+- se o menu está atualmente aberto ou fechado (aria-expanded);
+- uma descrição mais clara da ação quando o texto visível é curto ou ambíguo, como um ícone de hambúrguer sem texto (aria-label).
+
+Nesse caso, os atributos ARIA são necessários porque descrevem um estado dinâmico (aberto/fechado) e um relacionamento entre elementos que o HTML puro não tem como expressar sozinho, permitindo que o usuário de leitor de tela saiba exatamente o que o botão faz e qual é a situação atual do menu antes de interagir com ele.
+
+---
+
+Referência
+
+ZANARELLI, Zaion-Alaric. O que é WAI-ARIA? Disponível em: https://github.com/Zaion-Alaric-Zanarelli/zaion-web-studio/blob/main/content/bootstrap/o-que-e-wai-aria.md
